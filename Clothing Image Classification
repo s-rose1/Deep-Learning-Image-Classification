@@ -51,7 +51,7 @@ model.compile(
 )
 
 # Train the model
-model.fit(train_xs, train_ys, epochs=5)
+model.fit(train_xs, train_ys, epochs=10)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(test_xs, test_ys)

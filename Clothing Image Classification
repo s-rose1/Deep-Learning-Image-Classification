@@ -1,0 +1,69 @@
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the Fashion MNIST dataset
+mnist = tf.keras.datasets.fashion_mnist
+(train_xs, train_ys), (test_xs, test_ys) = mnist.load_data()
+
+# Print some information about the dataset
+print("Number of training examples:", len(train_xs))
+print("Number of test examples:", len(test_xs))
+print("Shape of an example:", train_xs[9999].shape)
+print("Label of an example:", train_ys[9999])
+print("Unique labels:", np.unique(train_ys))
+
+# Class names for the labels
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+# Display sample images
+plt.imshow(train_xs[9999], cmap=plt.cm.binary)
+plt.colorbar()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+for i in range(25):
+    plt.subplot(5, 5, i + 1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(train_xs[i], cmap=plt.cm.binary)
+    plt.xlabel(class_names[train_ys[i]])
+plt.show()
+
+# Normalize the data
+train_xs = train_xs / 255
+test_xs = test_xs / 255
+
+# Build the neural network model
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation=tf.nn.relu),
+    tf.keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+# Compile the model
+model.compile(
+    optimizer=tf.optimizers.Adam(),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train the model
+model.fit(train_xs, train_ys, epochs=5)
+
+# Evaluate the model
+test_loss, test_acc = model.evaluate(test_xs, test_ys)
+print("Test accuracy:", test_acc)
+
+# Display an example image from the test set
+plt.imshow(test_xs[9999], cmap=plt.cm.binary)
+plt.show()
+
+# Make predictions and display results
+classifications = model.predict(test_xs)
+probs = classifications[9999].round(4)
+print("Predicted probabilities:", probs)
+print("True class:", class_names[test_ys[9999]])
+print("Predicted class:", class_names[np.argmax(probs)])

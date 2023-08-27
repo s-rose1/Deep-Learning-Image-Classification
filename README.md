@@ -13,5 +13,6 @@ The MNIST dataset, initially created for digit recognition, has been preprocesse
 ## Results
 The trained model achieves an accuracy of 88.29% on the test dataset, showcasing its effectiveness in classifying different clothing items. The code and comments in the `main.py` file provide a step-by-step understanding of the process, making it suitable for learning and experimentation.
 
-
-
+## **License**
+This project is licensed under the terms of the MIT License. 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
